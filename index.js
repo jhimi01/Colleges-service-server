@@ -47,12 +47,23 @@ async function run() {
         res.send(result);
     })
 
+
     // ----------------- add addmissions items --------------------------------
     app.post('/admissions', async (req, res) => {
       const body = req.body;
       const result = await addmissionCollection.insertOne(body);
       res.send(result);
     }); 
+    // ---------------- get my college items --------------------------------
+    app.get('/admissions', async (req, res) =>{
+     const email = req.query.email;
+     if (!email) {
+      res.send([]);
+     }
+     const query = { candidateEmail: email }
+     const reuslt = await addmissionCollection.find(query).toArray()
+     res.send(reuslt)
+    });
 
 
 
