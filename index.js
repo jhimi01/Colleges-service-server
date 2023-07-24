@@ -33,6 +33,7 @@ async function run() {
 
     const collegeCollection = client.db("collegesDB").collection("colleges");
     const addmissionCollection = client.db("collegesDB").collection("admission");
+    const reviewCollection = client.db("collegesDB").collection("review");
 
     // ------- all colleges --------------------------------
     app.get('/colleges', async (req, res) => {
@@ -64,6 +65,19 @@ async function run() {
      const reuslt = await addmissionCollection.find(query).toArray()
      res.send(reuslt)
     });
+
+    // -------------- get review -------------------
+    app.get('/review', async (req, res) =>{
+      const result = await reviewCollection.find().toArray()
+      res.send(result)
+    })
+
+    // -------------- review add ----------------------
+    app.post('/review', async (req, res) =>{
+      const body = req.body;
+      const result = await reviewCollection.insertOne(body);
+      res.send(result)
+    })
 
 
 
